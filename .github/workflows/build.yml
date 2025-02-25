@@ -29,14 +29,19 @@ jobs:
           with:
                 dotnet-version: '8.0.x'
         
-        - name: Restore dependencies
-          run: dotnet restore
-
         - name: Set Version
           run: |
             echo ${GITHUB_REF#refs/tags/} > version.txt
-          if: startsWith(github.ref, 'refs/tags/')
-        
+            if: startsWith(github.ref, 'refs/tags/')
+              
+        - name: Create default version if no tag
+          run: |
+            echo "0.0.0" > version.txt
+            if: !startsWith(github.ref, 'refs/tags/')
+              
+        - name: Restore dependencies
+          run: dotnet restore
+                      
         - name: Build
           run: dotnet build --configuration Release --no-restore
         
