@@ -30,11 +30,11 @@ jobs:
                 dotnet-version: '8.0.x'
         
         - name: Set Version
+          if: ${{ startsWith(github.ref, 'refs/tags/') }}
           run: |
-              VERSION=${GITHUB_REF#refs/tags/}
-              echo "$VERSION" > version.txt
-              if: startsWith(github.ref, 'refs/tags/')
-                            
+            VERSION=${GITHUB_REF#refs/tags/}
+            echo "$VERSION" > version.txt
+                          
         - name: Create default version if no tag
           run: |
             echo "0.0.0" > version.txt
