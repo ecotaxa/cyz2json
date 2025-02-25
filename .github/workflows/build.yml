@@ -31,6 +31,11 @@ jobs:
         
         - name: Restore dependencies
           run: dotnet restore
+
+        - name: Set Version
+          run: |
+            echo ${GITHUB_REF#refs/tags/} > version.txt
+          if: startsWith(github.ref, 'refs/tags/')
         
         - name: Build
           run: dotnet build --configuration Release --no-restore
