@@ -73,8 +73,9 @@ namespace Cyz2Json
                 getDefaultValue: () => true);
 
             var versionOption = new Option<bool>(
-                name: "-V",
-                description: "Display version information (different from --version that show dotnet version)");
+                // name: "-V",
+                new[] { "-V", "--version" },
+                description: "Display version information");
 
             var rootCommand = new RootCommand("Convert CYZ files to JSON")
             {
@@ -83,6 +84,8 @@ namespace Cyz2Json
 
             // rootCommand.SetHandler(Convert, inputArgument, outputOption, rawOption, metadatagreedyOption);
             rootCommand.SetHandler((FileInfo input, FileInfo output, bool raw, bool metadatagreedy, bool version) =>
+
+
             {
                 if (version)
                 {
@@ -92,6 +95,7 @@ namespace Cyz2Json
                 Convert(input, output, raw, metadatagreedy);
             }, inputArgument, outputOption, rawOption, metadatagreedyOption, versionOption);
 
+            rootCommand.TreatUnmatchedTokensAsErrors = false;
             rootCommand.Invoke(args);
         }
 
