@@ -73,8 +73,8 @@ namespace Cyz2Json
                 getDefaultValue: () => true);
 
             var versionOption = new Option<bool>(
-                name: "--version",
-                description: "Display version information");
+                name: "-V",
+                description: "Display version information (different from --version that show dotnet version)");
 
             var rootCommand = new RootCommand("Convert CYZ files to JSON")
             {
